@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Student</title>
+    {% load static %}
+
+    <style>
+        body {
+            background: #f2eeb7;
+            font-family: Assistant, 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 400px;
+            margin: 0 auto;
+            padding: 50px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .user-icon {
+            text-align: center;
+            margin: 0 auto 20px;
+        }
+
+        .user-icon img {
+            width: 100px;
+            height: auto;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-tabs a {
+            background-color: #46a2da;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            flex: 1;
+            margin: 0 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-tabs a:hover {
+            background-color: #1d6fa5;
+        }
+
+        .nav-tabs .active {
+            background-color: #04AA6D;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background: #f5f5f5;
+            outline: none;
+        }
+
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.3s ease;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .save-button {
+            background-color: #f1ee8e;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .save-button:hover {
+            opacity: 0.8;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .footer a {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="user-icon">
+            <img src="{% static 'login.png' %}" alt="user-icon">
+        </div>
+
+        <form action="{% url 'loginstudent' %}" method="post">
+            {% csrf_token %}
+            <label for="studentid">Student ID:</label>
+            <input type="text" id="studentid" name="studentid" value="{{ request.POST.studentid }}">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" value="{{ request.POST.password }}">
+            <button type="submit" class="save-button">LOGIN</button>
+        </form>
+        {% if error_message %}
+            <p>{{ error_message }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

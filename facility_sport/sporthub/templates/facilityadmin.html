@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facility Stock</title>
+    {% load static %}
+    <style>
+      /* Reset margin and padding */
+      body, html {
+        background: #f2eeb7;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Add a black background color to the top navigation */
+      .topnav {
+        background-color: #333;
+        overflow: hidden;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+
+      /* Style the links inside the navigation bar */
+      .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      .topnav img {
+        float: left;
+        padding: 10px 15px;
+        height: 40px;
+      }
+
+      /* Change the color of links on hover */
+      .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+
+      /* Add a color to the active/current link */
+      .topnav a.active {
+        background-color: #f1ee8e;
+        color: black;
+      }
+
+      /* Container for welcome message and image */
+      .content-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* Full viewport height */
+        padding-top: 60px; /* To prevent overlap with fixed navbar */
+      }
+
+      .welcome-message {
+        flex: 1;
+        text-align: left;
+        padding: 20px;
+        font-size: 24px;
+      }
+
+      .column-33 {
+        flex: 1;
+        text-align: right;
+        padding: 20px;
+      }
+
+      .column-33 img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      /* Table styles */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 18px;
+        text-align: left;
+        background-color: #ffffff;
+      }
+
+      th, td {
+        padding: 12px;
+        border: 1px solid #dddddd;
+      }
+
+      th {
+        background-color: #f1ee8e;
+        color: black;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      /* Responsive styling */
+      @media (max-width: 600px) {
+        table, th, td {
+          display: block;
+          width: 100%;
+        }
+
+        th, td {
+          box-sizing: border-box;
+        }
+
+        th {
+          background-color: #333;
+          color: #f2f2f2;
+        }
+      }
+
+      /* Button styles */
+      .btn {
+        padding: 5px 10px;
+        margin: 2px;
+        border: none;
+        color: white;
+        background-color: #4CAF50;
+        cursor: pointer;
+      }
+
+      .btn.minus {
+        background-color: #f44336;
+      }
+      
+      .btn.save {
+        background-color: #008CBA;
+      }
+
+      .btn.new-facility {
+        float: right;
+        padding: 10px 20px;
+        margin: 10px 0;
+        background-color: #4CAF50;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        cursor: pointer;
+      }
+    </style>
+    <script>
+        function changeQuantity(id, delta) {
+          const quantityElement = document.getElementById('quantity-' + id);
+          let quantity = parseInt(quantityElement.textContent, 10);
+          quantity += delta;
+          if (quantity < 0) {
+            quantity = 0;
+          }
+          quantityElement.textContent = quantity;
+        }
+  
+        function saveCondition(id) {
+          const conditionElement = document.getElementById('condition-' + id);
+          alert('Condition for Facility ID ' + id + ' saved: ' + conditionElement.value);
+          // Here, you can add code to save the condition to a database or perform another action
+        }
+      </script>
+</head>
+<body>
+  <div class="topnav">
+    <img src="{% static 'sporthub.png' %}" alt="Sport Hub Logo">
+    <a href="{% url 'homeadmin' %}">HOME</a>
+    <a href="{% url 'facilityadmin' %}">FACILITY</a>
+    <a href="{% url 'bookingadmin' %}">LIST OF BOOKING</a>
+
+  </div>
+
+  <div class="content-container">
+    <div class="welcome-message">
+      <h2>Facility Stock</h2>
+      <p>Here is the current stock of our facilities:</p>
+
+      <a href="{% url 'newfacility' %}"><button class="btn new-facility">+ New Facility</button></a>
+      
+      <table>
+  
+        <tr>
+          <th>Facility Name</th>
+          <th>Quantity</th>
+ 
+          <th>Actions</th>
+          <!--<th><a href="updatefacility/{{ booking.bookid }}">UPDATE</a></th>
+          <th><a href="deletefacility/{{ booking.bookid }}">DELETE</a></th>-->
+        </tr>
+        <!-- Sample data rows -->
+        <tr>
+          <td>Football</td>
+          <td id="quantity-1">5</td>
+        
+          <td>
+            <button class="btn" onclick="changeQuantity(1, 1)">+</button>
+            <button class="btn minus" onclick="changeQuantity(1, -1)">-</button>
+            <button class="btn save" onclick="saveCondition(1)">Save</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Netball</td>
+          <td id="quantity-1">5</td>
+       
+          <td>
+          <button class="btn" onclick="changeQuantity(1, 1)">+</button>
+          <button class="btn minus" onclick="changeQuantity(1, -1)">-</button>
+          <button class="btn save" onclick="saveCondition(1)">Save</button>
+          </td>
+        </tr>
+
+
+        <!-- Add more rows as necessary -->
+      </table>
+    </div>
+  </div>
+</body>
+</html>
